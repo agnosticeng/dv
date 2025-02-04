@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ChartSettingsType, Data } from '../types.js';
+	import type { ChartSettingsType, Data } from '../index.js';
 	import { renderChart } from './render.js';
 
 	let {
@@ -30,7 +30,6 @@
 
 		if (div?.parentElement) {
 			resizeObserver = new ResizeObserver(() => {
-				console.log('resize');
 				if (settings) {
 					render();
 				}

@@ -1,6 +1,6 @@
 import * as Plot from '@observablehq/plot';
 import * as d3 from 'd3';
-import type { Data, ChartSettingsType } from '$lib/types.js';
+import type { Data, ChartSettingsType } from '$lib/index.js';
 
 export const renderChart = (
 	inputDiv: HTMLElement,

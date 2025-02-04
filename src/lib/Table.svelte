@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Column, Data, Value } from './types.js';
+	import type { Column, Data, Value } from './index.js';
 
 	interface Props {
 		data: Data;
