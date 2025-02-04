@@ -1,14 +1,5 @@
 <script lang="ts">
-	type Column = {
-		name: string;
-		type: string;
-	};
-
-	type Value = string | number | boolean | null | Array<string | number | boolean | null>;
-
-	type Data = Array<{
-		[key: string]: Value;
-	}>;
+	import type { Column, Data, Value } from './types.js';
 
 	interface Props {
 		data: Data;
