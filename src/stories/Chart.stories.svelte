@@ -1,9 +1,9 @@
 <script module>
-	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Chart from '$lib/Chart/Chart.svelte';
+	import { defineMeta } from '@storybook/addon-svelte-csf';
 
 	const { Story } = defineMeta({
-		title: 'Agnostic/Chart',
+		title: 'Agnostic/Chart/Line',
 		component: Chart,
 		tags: ['autodocs'],
 		args: {
@@ -16,6 +16,7 @@
 			],
 			settings: {
 				chartType: 'line',
+				legends: true,
 				xAxis: {
 					series: ['date']
 				},

@@ -44,3 +44,10 @@
 </script>
 
 <div class="chart" bind:this={div} role="img"></div>
+
+<style>
+	div {
+		height: 100%;
+		width: 100%;
+	}
+</style>

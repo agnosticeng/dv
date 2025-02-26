@@ -1,5 +1,5 @@
-export { default as Table } from './Table.svelte';
 export { default as Chart } from './Chart/Chart.svelte';
+export { default as Table } from './Table.svelte';
 
 export type Column = {
 	name: string;
@@ -14,6 +14,7 @@ export type Data = Array<{
 
 export type ChartSettingsType = {
 	chartType: 'candle' | 'line';
+	legends?: boolean;
 	xAxis: {
 		series: string[];
 	};

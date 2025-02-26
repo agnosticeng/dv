@@ -1,6 +1,12 @@
-import * as Plot from '@observablehq/plot';
-import * as d3 from 'd3';
-import type { Data, ChartSettingsType } from '$lib/index.js';
+import type { ChartSettingsType, Data } from '$lib/index.js';
+import { candle } from './candle.js';
+import { line } from './line.js';
+
+export interface ChartConfig {
+	height: number;
+	width: number;
+	legend?: boolean;
+}
 
 export const renderChart = (
 	inputDiv: HTMLElement,
@@ -13,76 +19,19 @@ export const renderChart = (
 		return;
 	}
 
-	const marks = [];
-
 	const xAxisSeries = settings.xAxis.series[0];
 	const yAxisSeries = settings.yAxis.series;
 
-	const timeData = inputData
-		.map((d) => ({
-			...d,
-			[xAxisSeries]: new Date(d[xAxisSeries] as string),
-			...Object.fromEntries(yAxisSeries.map((s) => [s, Number(d[s])]))
-		}))
-		.sort((a, b) => {
-			const aDate = a[xAxisSeries] as Date;
-			const bDate = b[xAxisSeries] as Date;
-			return aDate.getTime() - bDate.getTime();
-		});
-
-	const colors = d3.schemeCategory10;
+	const config: ChartConfig = {
+		height: inputDiv.clientHeight,
+		width: inputDiv.clientWidth,
+		legend: settings.legends
+	};
 
 	switch (settings.chartType) {
 		case 'line':
-			yAxisSeries.forEach((ySeries, index) => {
-				marks.push(
-					Plot.line(timeData, {
-						x: xAxisSeries ?? '',
-						y: ySeries ?? '',
-						stroke: colors[index % colors.length]
-					})
-				);
-			});
-			break;
+			return inputDiv.append(line(inputData, xAxisSeries, yAxisSeries, config));
 		case 'candle':
-			marks.push(
-				Plot.ruleX(timeData, {
-					x: xAxisSeries,
-					y1: 'low',
-					y2: 'high'
-				}),
-				Plot.ruleX(timeData, {
-					x: xAxisSeries,
-					y1: 'open',
-					y2: 'close',
-					stroke: (d: { [key: string]: string }) =>
-						d['close'] > d['open'] ? '#4daf4a' : '#e41a1c',
-					strokeWidth: 4,
-					strokeLinecap: 'round'
-				})
-			);
-			break;
+			return inputDiv.append(candle(inputData, xAxisSeries, config));
 	}
-
-	inputDiv?.append(
-		Plot.plot({
-			marks,
-			marginTop: 15,
-			marginRight: 15,
-			marginBottom: 30,
-			marginLeft: 40,
-			grid: true,
-			width: inputDiv.clientWidth,
-			height: inputDiv.clientHeight,
-			y: {
-				label: null,
-				labelArrow: false,
-				tickFormat: d3.format('.2s')
-			},
-			x: {
-				label: null,
-				labelArrow: false
-			}
-		})
-	);
 };
