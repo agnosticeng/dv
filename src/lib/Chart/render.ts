@@ -1,4 +1,5 @@
 import type { ChartSettingsType, Data } from '$lib/index.js';
+import { bar } from './bar.js';
 import { candle } from './candle.js';
 import { line } from './line.js';
 
@@ -33,5 +34,7 @@ export const renderChart = (
 			return inputDiv.append(line(inputData, xAxisSeries, yAxisSeries, config));
 		case 'candle':
 			return inputDiv.append(candle(inputData, xAxisSeries, config));
+		case 'bar':
+			return inputDiv.append(bar(inputData, xAxisSeries, yAxisSeries, config));
 	}
 };

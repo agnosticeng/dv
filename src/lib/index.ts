@@ -13,7 +13,7 @@ export type Data = Array<{
 }>;
 
 export type ChartSettingsType = {
-	chartType: 'candle' | 'line';
+	chartType: 'candle' | 'line' | 'bar';
 	legends?: boolean;
 	xAxis: {
 		series: string[];
