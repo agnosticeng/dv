@@ -12,12 +12,13 @@ export type Data = Array<{
 	[key: string]: Value;
 }>;
 
+export type Point = {
+	[key: string]: Value;
+};
+
 export type ChartSettingsType = {
-	chartType: 'candle' | 'line';
-	xAxis: {
-		series: string[];
-	};
-	yAxis: {
-		series: string[];
-	};
+	type: 'candle' | 'line' | 'bar';
+	x: string;
+	y: string[];
+	z?: string;
 };

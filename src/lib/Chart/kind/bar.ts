@@ -1,7 +1,7 @@
 import * as Plot from '@observablehq/plot';
 
 import d from '../utils/conf.js';
-import colors from '../utils/colors.js';
+import { time } from '../utils/time.js';
 
 import type { Data, Point } from '$lib/index.js';
 
@@ -11,20 +11,18 @@ export default function line(
 	axis: { x: string; y: string[]; z?: string }
 ): Node {
 	return Plot.plot({
-		marks: axis.y.map((y, i) =>
-			Plot.line(data, {
-				x: (d: Point) => {
-					const val = d[axis.x];
-					const date = new Date(val as string | number);
-					return isNaN(date.getTime()) ? val : date;
-				},
+		...d,
+		color: { legend: !!axis.z },
+		marks: axis.y.map((y) =>
+			Plot.rectY(data, {
+				x: time(axis.x),
 				y,
-				stroke: axis.z ?? colors[i],
+				fill: axis.z,
 				sort: (d: Point) => d[axis.x]
 			})
 		),
 		width: size.width,
 		height: size.height,
-		...d
+		x: { type: 'band', ...d.x }
 	});
 }
