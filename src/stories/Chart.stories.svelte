@@ -1,30 +1,36 @@
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Chart from '$lib/Chart/Chart.svelte';
+	import stocks from './stock-sample.js';
+	import browsers from './browser-sample.js';
 
 	const { Story } = defineMeta({
 		title: 'Agnostic/Chart',
 		component: Chart,
-		tags: ['autodocs'],
-		args: {
-			data: [
-				{ id: 1, name: 'Item 1', date: '2023-01-01', value: 100.5 },
-				{ id: 2, name: 'Item 2', date: '2023-01-02', value: 200.75 },
-				{ id: 3, name: 'Item 3', date: '2023-01-03', value: 150.25 },
-				{ id: 4, name: 'Item 4', date: '2023-01-04', value: 300.0 },
-				{ id: 5, name: 'Item 5', date: '2023-01-05', value: 250.5 }
-			],
-			settings: {
-				chartType: 'line',
-				xAxis: {
-					series: ['date']
-				},
-				yAxis: {
-					series: ['value']
-				}
-			}
-		}
+		tags: ['autodocs']
 	});
 </script>
 
-<Story name="Base" />
+<Story
+	name="Line"
+	args={{
+		data: stocks,
+		settings: { type: 'line', x: 'date', y: ['low', 'high'] }
+	}}
+/>
+
+<Story
+	name="Candlestick"
+	args={{
+		data: stocks,
+		settings: { type: 'candle', x: 'date', y: ['low', 'high', 'open', 'close'] }
+	}}
+/>
+
+<Story
+	name="Bar"
+	args={{
+		data: browsers,
+		settings: { type: 'bar', x: 'Date', y: ['Version'], z: 'Browser' }
+	}}
+/>

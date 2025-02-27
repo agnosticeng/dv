@@ -1,33 +1,39 @@
 import type { Data, ChartSettingsType } from '$lib/index.js';
-import { line, candlestick } from './kind/index.js';
+import { line, bar, candlestick } from './kind/index.js';
 
-export const renderChart = (
-	inputDiv: HTMLElement,
-	inputData: Data,
-	settings: ChartSettingsType
-) => {
-	inputDiv?.firstChild?.remove();
+export const renderChart = (div: HTMLElement, data: Data, settings: ChartSettingsType) => {
+	div?.firstChild?.remove();
 
-	if (!settings || settings.xAxis.series.length == 0 || settings.yAxis.series.length == 0) {
+	if (!settings || !settings.x || !settings.y) {
 		return;
 	}
 
-	const xAxisSeries = settings.xAxis.series[0];
-	const yAxisSeries = settings.yAxis.series;
+	let plot: Node | undefined;
 
-	let plot;
+	const size = {
+		width: div.clientWidth,
+		height: div.clientHeight
+	};
 
-	const width = inputDiv.clientWidth;
-	const height = inputDiv.clientHeight;
+	const axis = {
+		x: settings.x,
+		y: settings.y,
+		z: settings.z
+	};
 
-	switch (settings.chartType) {
+	switch (settings.type) {
 		case 'line':
-			plot = line(inputData, xAxisSeries, yAxisSeries, width, height);
+			plot = line(size, data, axis);
+			break;
+		case 'bar':
+			plot = bar(size, data, axis);
 			break;
 		case 'candle':
-			plot = candlestick(inputData, xAxisSeries, yAxisSeries, width, height);
+			plot = candlestick(size, data, axis);
 			break;
 	}
 
-	inputDiv?.append(plot);
+	if (plot) {
+		div?.append(plot);
+	}
 };
