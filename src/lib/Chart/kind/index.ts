@@ -1,4 +1,5 @@
-import line from './line.js';
+import bar from './bar.js';
 import candlestick from './candlestick.js';
+import line from './line.js';
 
-export { line, candlestick };
+export { bar, candlestick, line };

@@ -1,5 +1,5 @@
 import type { Data, ChartSettingsType } from '$lib/index.js';
-import { line, candlestick } from './kind/index.js';
+import { line, candlestick, bar } from './kind/index.js';
 
 export const renderChart = (
 	inputDiv: HTMLElement,
@@ -26,6 +26,9 @@ export const renderChart = (
 			break;
 		case 'candle':
 			plot = candlestick(inputData, xAxisSeries, yAxisSeries, width, height);
+			break;
+		case 'bar':
+			plot = bar(inputData, xAxisSeries, yAxisSeries, width, height);
 			break;
 	}
 
