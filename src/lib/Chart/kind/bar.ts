@@ -4,6 +4,7 @@ import d from '../utils/conf.js';
 import { time } from '../utils/time.js';
 
 import type { Data, Point } from '$lib/index.js';
+import colors from '../utils/colors.js';
 
 export default function line(
 	size: { width: number; height: number },
@@ -13,11 +14,11 @@ export default function line(
 	return Plot.plot({
 		...d,
 		color: { legend: !!axis.z },
-		marks: axis.y.map((y) =>
+		marks: axis.y.map((y, i) =>
 			Plot.rectY(data, {
 				x: time(axis.x),
 				y,
-				fill: axis.z,
+				fill: axis.z ?? colors[i],
 				sort: (d: Point) => d[axis.x]
 			})
 		),
