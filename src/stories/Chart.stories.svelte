@@ -34,3 +34,11 @@
 		settings: { type: 'bar', x: 'Date', y: ['Version'], z: 'Browser' }
 	}}
 />
+
+<Story
+	name="Horizontal-Bar"
+	args={{
+		data: browsers,
+		settings: { type: 'h-bar', x: 'Date', y: ['Version'], z: 'Browser' }
+	}}
+/>

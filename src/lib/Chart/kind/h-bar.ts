@@ -6,18 +6,18 @@ import { time } from '../utils/time.js';
 import type { Data, Point } from '$lib/index.js';
 import colors from '../utils/colors.js';
 
-export default function bar(
+export default function hbar(
 	size: { width: number; height: number },
 	data: Data,
 	axis: { x: string; y: string[]; z?: string }
-): Node {
+) {
 	return Plot.plot({
 		...d,
 		color: { legend: !!axis.z },
 		marks: axis.y.map((y, i) =>
-			Plot.rectY(data, {
-				x: time(axis.x),
-				y,
+			Plot.rectX(data, {
+				x: y,
+				y: time(axis.x),
 				fill: axis.z ?? colors[i],
 				sort: (d: Point) => d[axis.x],
 				tip: true
@@ -25,6 +25,6 @@ export default function bar(
 		),
 		width: size.width,
 		height: size.height,
-		x: { type: 'band', ...d.x }
+		y: { type: 'band', ...d.x }
 	});
 }
