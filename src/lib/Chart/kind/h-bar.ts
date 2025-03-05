@@ -3,7 +3,7 @@ import * as Plot from '@observablehq/plot';
 import d from '../utils/conf.js';
 import { time } from '../utils/time.js';
 
-import type { Data, Point } from '$lib/index.js';
+import type { Data } from '$lib/index.js';
 import colors from '../utils/colors.js';
 
 export default function hbar(
@@ -19,7 +19,6 @@ export default function hbar(
 				x: y,
 				y: time(axis.x),
 				fill: axis.z ?? colors[i],
-				sort: (d: Point) => d[axis.x],
 				tip: true
 			})
 		),

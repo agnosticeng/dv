@@ -20,7 +20,6 @@ export default function line(
 				},
 				y,
 				stroke: axis.z ?? colors[i],
-				sort: (d: Point) => d[axis.x],
 				tip: true
 			})
 		),
