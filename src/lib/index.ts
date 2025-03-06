@@ -6,7 +6,8 @@ export type Column = {
 	type: string;
 };
 
-export type Value = string | number | boolean | null | Array<string | number | boolean | null>;
+type LiteralValue = string | number | boolean | null;
+export type Value = LiteralValue | Array<LiteralValue> | Record<string, LiteralValue>;
 
 export type Data = Array<{
 	[key: string]: Value;

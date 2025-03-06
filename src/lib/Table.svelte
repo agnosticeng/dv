@@ -14,7 +14,7 @@
 	function formatValue(value: Value) {
 		if (value === null) return 'NULL';
 		if (value === undefined) return 'UNDEFINED';
-		if (Array.isArray(value)) return JSON.stringify(value);
+		if (Array.isArray(value) || typeof value === 'object') return JSON.stringify(value);
 		return value;
 	}
 
