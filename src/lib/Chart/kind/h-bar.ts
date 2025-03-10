@@ -19,11 +19,13 @@ export default function hbar(
 				x: y,
 				y: time(axis.x),
 				fill: axis.z ?? colors[i],
-				tip: true
+				tip: true,
+				sort: { y: null }
 			})
 		),
 		width: size.width,
 		height: size.height,
-		y: { type: 'band', ...d.x }
+		marginLeft: axis.z ? 5 : 40,
+		y: { type: 'band', ...d.x, axis: axis.z ? null : 'left' }
 	});
 }
