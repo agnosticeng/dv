@@ -11,15 +11,19 @@ export default function hbar(
 	data: Data,
 	axis: { x: string; y: string[]; z?: string }
 ) {
+	const __data = data.map((d, i) => ({ ...d, __index: i }));
+
 	return Plot.plot({
 		...d,
 		color: { legend: !!axis.z },
 		marks: axis.y.map((y, i) =>
-			Plot.rectX(data, {
+			Plot.rectX(__data, {
 				x: y,
 				y: time(axis.x),
 				fill: axis.z ?? colors[i],
-				tip: true
+				tip: true,
+				// @ts-expect-error mistyping from plot
+				sort: { y: { x: '__index' } }
 			})
 		),
 		width: size.width,

@@ -22,7 +22,7 @@
 			div.style.width = `${div.parentElement.clientWidth}px`;
 			div.style.height = `${div.parentElement.clientHeight}px`;
 		}
-		renderChart(div, data, settings);
+		renderChart(div, $state.snapshot(data), settings);
 	};
 
 	$effect(() => {
