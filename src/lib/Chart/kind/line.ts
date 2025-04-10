@@ -47,7 +47,7 @@ function tip(data: Data, axis: { x: string; y: string[]; z?: string }) {
 	}
 
 	return [
-		Plot.ruleX(data, Plot.pointerX({ x, stroke: 'currentColor' })),
+		Plot.ruleX(data, Plot.pointerX({ x, stroke: 'currentColor', strokeOpacity: 0.6 })),
 		...axis.y.map((y, i) => Plot.dot(data, Plot.pointerX({ x, y, stroke: axis.z ?? colors[i] }))),
 		Plot.tip(
 			tipsData,
