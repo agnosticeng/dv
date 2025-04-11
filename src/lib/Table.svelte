@@ -9,8 +9,6 @@
 
 	let { data, columns, theme = 'dark' }: Props = $props();
 
-	let table: HTMLElement;
-
 	function formatValue(value: Value) {
 		if (value === null) return 'NULL';
 		if (value === undefined) return 'UNDEFINED';
@@ -23,9 +21,15 @@
 	let isResizing = $state<string | null>(null);
 	let startX = $state<number>(0);
 	let columnSizes = $state<Record<string, number>>({});
+	let table = $state<HTMLTableElement>();
 
 	$effect(() => {
-		columnSizes = columns.reduce((acc, col) => ({ ...acc, [col.name]: 200 }), {});
+		const full = columns.length === 1;
+		const width = table?.parentElement?.clientWidth ?? 0;
+		columnSizes = columns.reduce(
+			(acc, col) => ({ ...acc, [col.name]: full ? Math.max(200, width) : 200 }),
+			{}
+		);
 	});
 
 	const sortedRows = $derived(
@@ -69,7 +73,6 @@
 	}
 
 	function startResize(e: MouseEvent, columnName: string) {
-		table.style.webkitUserSelect = 'none';
 		isResizing = columnName;
 		startX = e.pageX;
 		window.addEventListener('mousemove', handleResize);
@@ -87,7 +90,10 @@
 		isResizing = null;
 		window.removeEventListener('mousemove', handleResize);
 		window.removeEventListener('mouseup', stopResize);
-		table.style.webkitUserSelect = '';
+	}
+
+	function isUrl(str: string): boolean {
+		return /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ./?%&=]*)?$/.test(str);
 	}
 </script>
 
@@ -121,9 +127,14 @@
 					{@const isNumberType =
 						type.toLowerCase().includes('int') || type.toLowerCase().includes('float')}
 					{@const isDateType = type.toLowerCase().includes('date')}
+					{@const formated = formatValue(value)}
 					<td class:text-right={isNumberType || isDateType}>
 						<div class="td-content">
-							{formatValue(value)}
+							{#if typeof formated === 'string' && isUrl(formated)}
+								<a rel="external" target="_blank" href={formated}>{formated}</a>
+							{:else}
+								{formated}
+							{/if}
 						</div>
 					</td>
 				{/each}
@@ -133,6 +144,15 @@
 </table>
 
 <style>
+	* {
+		box-sizing: border-box;
+	}
+
+	table:has(.resize-handle:active) {
+		user-select: none;
+		-webkit-user-select: none;
+	}
+
 	td,
 	th {
 		padding: 0 10px;
