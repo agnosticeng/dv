@@ -9,8 +9,6 @@
 
 	let { data, columns, theme = 'dark' }: Props = $props();
 
-	let table: HTMLElement;
-
 	function formatValue(value: Value) {
 		if (value === null) return 'NULL';
 		if (value === undefined) return 'UNDEFINED';
@@ -23,9 +21,15 @@
 	let isResizing = $state<string | null>(null);
 	let startX = $state<number>(0);
 	let columnSizes = $state<Record<string, number>>({});
+	let table = $state<HTMLTableElement>();
 
 	$effect(() => {
-		columnSizes = columns.reduce((acc, col) => ({ ...acc, [col.name]: 200 }), {});
+		const full = columns.length === 1;
+		const width = table?.parentElement?.clientWidth ?? 0;
+		columnSizes = columns.reduce(
+			(acc, col) => ({ ...acc, [col.name]: full ? Math.max(200, width) : 200 }),
+			{}
+		);
 	});
 
 	const sortedRows = $derived(
@@ -140,6 +144,10 @@
 </table>
 
 <style>
+	* {
+		box-sizing: border-box;
+	}
+
 	table:has(.resize-handle:active) {
 		user-select: none;
 		-webkit-user-select: none;
