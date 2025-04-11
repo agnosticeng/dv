@@ -69,7 +69,6 @@
 	}
 
 	function startResize(e: MouseEvent, columnName: string) {
-		table.style.webkitUserSelect = 'none';
 		isResizing = columnName;
 		startX = e.pageX;
 		window.addEventListener('mousemove', handleResize);
@@ -87,7 +86,10 @@
 		isResizing = null;
 		window.removeEventListener('mousemove', handleResize);
 		window.removeEventListener('mouseup', stopResize);
-		table.style.webkitUserSelect = '';
+	}
+
+	function isUrl(str: string): boolean {
+		return /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ./?%&=]*)?$/.test(str);
 	}
 </script>
 
@@ -121,9 +123,14 @@
 					{@const isNumberType =
 						type.toLowerCase().includes('int') || type.toLowerCase().includes('float')}
 					{@const isDateType = type.toLowerCase().includes('date')}
+					{@const formated = formatValue(value)}
 					<td class:text-right={isNumberType || isDateType}>
 						<div class="td-content">
-							{formatValue(value)}
+							{#if typeof formated === 'string' && isUrl(formated)}
+								<a rel="external" target="_blank" href={formated}>{formated}</a>
+							{:else}
+								{formated}
+							{/if}
 						</div>
 					</td>
 				{/each}
@@ -133,6 +140,11 @@
 </table>
 
 <style>
+	table:has(.resize-handle:active) {
+		user-select: none;
+		-webkit-user-select: none;
+	}
+
 	td,
 	th {
 		padding: 0 10px;
