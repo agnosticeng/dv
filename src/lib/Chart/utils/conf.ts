@@ -7,14 +7,17 @@ export default {
 	marginBottom: 30,
 	marginLeft: 40,
 	grid: true,
-	y: {
-		label: null,
-		labelArrow: false,
-		tickFormat: d3.format('.2s')
-	},
 	x: {
 		label: null,
 		labelArrow: false
 	},
-	marks: [axisY({ textOverflow: 'ellipsis', lineWidth: 3 })]
+	marks: [
+		axisY({
+			textOverflow: 'ellipsis',
+			lineWidth: 3,
+			text: (d) => (typeof d === 'number' ? d3.format('.2s')(d) : d),
+			label: null,
+			labelArrow: false
+		})
+	]
 } satisfies PlotOptions;

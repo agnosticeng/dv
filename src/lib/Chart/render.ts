@@ -4,7 +4,7 @@ import { line, bar, candlestick, hbar } from './kind/index.js';
 export const renderChart = (div: HTMLElement, data: Data, settings: ChartSettingsType) => {
 	div?.firstChild?.remove();
 
-	if (!settings || !settings.x || !settings.y) {
+	if (!settings || !settings.x || !settings.y.length) {
 		return;
 	}
 

@@ -29,6 +29,6 @@ export default function hbar(
 		width: size.width,
 		height: size.height,
 		marginLeft: axis.z ? 5 : 40,
-		y: { type: 'band', ...d.x, axis: axis.z ? null : 'left' }
+		y: { type: 'band', ...d.x, axis: axis.z ? null : undefined }
 	});
 }
