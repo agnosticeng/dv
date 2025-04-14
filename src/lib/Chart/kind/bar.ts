@@ -14,14 +14,17 @@ export default function bar(
 	return Plot.plot({
 		...d,
 		color: { legend: !!axis.z },
-		marks: axis.y.map((y, i) =>
-			Plot.rectY(data, {
-				x: time(axis.x),
-				y,
-				fill: axis.z ?? colors[i],
-				tip: true
-			})
-		),
+		marks: [
+			...d.marks,
+			...axis.y.map((y, i) =>
+				Plot.rectY(data, {
+					x: time(axis.x),
+					y,
+					fill: axis.z ?? colors[i],
+					tip: true
+				})
+			)
+		],
 		width: size.width,
 		height: size.height,
 		x: { type: 'band', ...d.x }

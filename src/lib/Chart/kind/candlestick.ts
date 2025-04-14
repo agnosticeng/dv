@@ -11,6 +11,7 @@ export default function candlestick(
 	return Plot.plot({
 		...d,
 		marks: [
+			...d.marks,
 			Plot.ruleX(data, {
 				x: time(axis.x),
 				y1: 'low',
