@@ -11,7 +11,9 @@ export default function line(
 	axis: { x: string; y: string[]; z?: string }
 ): Node {
 	return Plot.plot({
+		...d,
 		marks: [
+			...d.marks,
 			...axis.y.map((y, i) =>
 				Plot.line(data, {
 					x: (d: Point) => {
@@ -27,8 +29,7 @@ export default function line(
 			...tip(data, axis)
 		],
 		width: size.width,
-		height: size.height,
-		...d
+		height: size.height
 	});
 }
 

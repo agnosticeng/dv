@@ -1,3 +1,4 @@
+import { axisY, type PlotOptions } from '@observablehq/plot';
 import * as d3 from 'd3';
 
 export default {
@@ -14,5 +15,6 @@ export default {
 	x: {
 		label: null,
 		labelArrow: false
-	}
-};
+	},
+	marks: [axisY({ textOverflow: 'ellipsis', lineWidth: 3 })]
+} satisfies PlotOptions;

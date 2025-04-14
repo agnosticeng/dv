@@ -14,15 +14,18 @@ export default function hbar(
 	return Plot.plot({
 		...d,
 		color: { legend: !!axis.z },
-		marks: axis.y.map((y, i) =>
-			Plot.rectX(data, {
-				x: y,
-				y: time(axis.x),
-				fill: axis.z ?? colors[i],
-				tip: true,
-				sort: { y: null }
-			})
-		),
+		marks: [
+			...d.marks,
+			...axis.y.map((y, i) =>
+				Plot.rectX(data, {
+					x: y,
+					y: time(axis.x),
+					fill: axis.z ?? colors[i],
+					tip: true,
+					sort: { y: null }
+				})
+			)
+		],
 		width: size.width,
 		height: size.height,
 		marginLeft: axis.z ? 5 : 40,
