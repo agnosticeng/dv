@@ -18,7 +18,7 @@ export type Point = {
 };
 
 export type ChartSettingsType = {
-	type: 'candle' | 'line' | 'bar' | 'h-bar';
+	type: 'candle' | 'line' | 'bar' | 'h-bar' | 'bubble';
 	x: string;
 	y: string[];
 	z?: string;
