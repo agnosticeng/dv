@@ -43,3 +43,11 @@
 		settings: { type: 'h-bar', x: 'signature', y: ['cnt'], z: 'signature' }
 	}}
 />
+
+<Story
+	name="Bubble"
+	args={{
+		data: browsers,
+		settings: { type: 'bubble', x: 'Browser', y: ['Version'] }
+	}}
+/>
