@@ -4,6 +4,7 @@
 	import stocks from './stock-sample.js';
 	import browsers from './browser-sample.js';
 	import signatures from './evm-sample.js';
+	import buidl from './buidl-sample.js';
 
 	const { Story } = defineMeta({
 		title: 'Agnostic/Chart',
@@ -41,5 +42,13 @@
 	args={{
 		data: signatures,
 		settings: { type: 'h-bar', x: 'signature', y: ['cnt'], z: 'signature' }
+	}}
+/>
+
+<Story
+	name="Bubble"
+	args={{
+		data: buidl,
+		settings: { type: 'bubble', x: 'wallet_enc', y: ['amount'] }
 	}}
 />
