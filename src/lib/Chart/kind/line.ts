@@ -12,6 +12,7 @@ export default function line(
 ): Node {
 	return Plot.plot({
 		...d,
+		color: { legend: !!axis.z },
 		marks: [
 			...d.marks,
 			...axis.y.map((y, i) =>
