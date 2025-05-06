@@ -1,5 +1,5 @@
 import type { Data, ChartSettingsType } from '$lib/index.js';
-import { line, bar, candlestick, hbar } from './kind/index.js';
+import { line, bar, candlestick, hbar, bubble } from './kind/index.js';
 
 export const renderChart = (div: HTMLElement, data: Data, settings: ChartSettingsType) => {
 	div?.firstChild?.remove();
@@ -33,6 +33,9 @@ export const renderChart = (div: HTMLElement, data: Data, settings: ChartSetting
 			break;
 		case 'h-bar':
 			plot = hbar(size, data, axis);
+			break;
+		case 'bubble':
+			plot = bubble(size, data, axis);
 			break;
 	}
 
