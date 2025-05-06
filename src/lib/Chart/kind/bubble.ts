@@ -12,27 +12,26 @@ export default function bubble(
 
 	const root = pack(
 		d3
-			.hierarchy<Data[number]>({ children: data } as unknown as Data[number])
+			.hierarchy<
+				Data[number]
+			>({ children: data.filter((d) => +d[axis.y[0]]!) } as unknown as Data[number])
 			.sum((d) => +d[axis.y[0]]!)
 	);
 
 	const circles = root.leaves().map((d) => ({ ...d.data, ...d }));
-	const min = Math.min(...circles.map((c) => c.r));
-	const max = Math.max(...circles.map((c) => c.r));
+	const R = circles.map((c) => c.r);
 
-	const identity = {
-		type: 'linear',
-		domain: [min, max],
-		range: [min, max]
-	} satisfies Plot.ScaleOptions;
+	const rIdentity = getIdentityScaleOptions([Math.min(...R), Math.max(...R)]);
+	const sizeIdentity = getIdentityScaleOptions([0, size.width]);
 
 	return Plot.plot({
 		...d,
 		grid: false,
 		axis: false,
-		x: { ...d.x, ...identity },
-		y: identity,
-		r: identity,
+		x: { ...d.x, ...sizeIdentity },
+		y: sizeIdentity,
+		r: rIdentity,
+		color: { legend: true },
 		marks: [
 			Plot.dot(circles, {
 				r: (d) => d.r,
@@ -46,4 +45,8 @@ export default function bubble(
 		width: size.width,
 		height: size.height
 	});
+}
+
+function getIdentityScaleOptions(range: Plot.ScaleOptions['range']): Plot.ScaleOptions {
+	return { type: 'linear', domain: range, range: range };
 }
