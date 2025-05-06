@@ -22,4 +22,5 @@ export type ChartSettingsType = {
 	x: string;
 	y: string[];
 	z?: string;
+	legend?: 'x' | 'y' | 'z';
 };

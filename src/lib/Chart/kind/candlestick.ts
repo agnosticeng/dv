@@ -6,7 +6,7 @@ import d from '../utils/conf.js';
 export default function candlestick(
 	size: { width: number; height: number },
 	data: Data,
-	axis: { x: string; y: string[]; z?: string }
+	axis: { x: string; y: string[]; z?: string; legend?: 'x' | 'y' | 'z' }
 ): Node {
 	return Plot.plot({
 		...d,
@@ -16,17 +16,7 @@ export default function candlestick(
 				x: time(axis.x),
 				y1: 'low',
 				y2: 'high',
-				tip: {
-					format: {
-						x: true,
-						y1: false,
-						y2: false,
-						open: true,
-						close: true,
-						high: true,
-						low: true
-					}
-				},
+				tip: { format: { x: true, y1: false, y2: false } },
 				channels: { open: 'open', close: 'close', high: 'high', low: 'low' }
 			}),
 			Plot.ruleX(data, {

@@ -6,7 +6,7 @@ import * as d3 from 'd3';
 export default function bubble(
 	size: { width: number; height: number },
 	data: Data,
-	axis: { x: string; y: string[]; z?: string }
+	axis: { x: string; y: string[]; z?: string; legend?: 'x' | 'y' | 'z' }
 ): Node | undefined {
 	const pack = d3.pack<Data[number]>().size([size.width, size.height]).padding(5);
 
@@ -32,7 +32,7 @@ export default function bubble(
 		x: { ...d.x, ...sizeIdentity },
 		y: sizeIdentity,
 		r: rIdentity,
-		color: { legend: true, domain: F },
+		color: { legend: axis.legend === 'x', domain: F },
 		marks: [
 			Plot.dot(circles, {
 				r: (d) => d.r,

@@ -18,7 +18,8 @@ export const renderChart = (div: HTMLElement, data: Data, settings: ChartSetting
 	const axis = {
 		x: settings.x,
 		y: settings.y,
-		z: settings.z
+		z: settings.z,
+		legend: settings.legend
 	};
 
 	switch (settings.type) {

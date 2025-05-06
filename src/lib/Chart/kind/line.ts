@@ -8,11 +8,13 @@ import type { Data, Point, Value } from '$lib/index.js';
 export default function line(
 	size: { width: number; height: number },
 	data: Data,
-	axis: { x: string; y: string[]; z?: string }
+	axis: { x: string; y: string[]; z?: string; legend?: 'x' | 'y' | 'z' }
 ): Node {
 	return Plot.plot({
 		...d,
-		color: { legend: !!axis.z },
+		color: { legend: axis.legend === 'z' },
+		x: { legend: axis.legend === 'x' },
+		y: { legend: axis.legend === 'y' },
 		marks: [
 			...d.marks,
 			...axis.y.map((y, i) =>
@@ -34,7 +36,7 @@ export default function line(
 	});
 }
 
-function tip(data: Data, axis: { x: string; y: string[]; z?: string }) {
+function tip(data: Data, axis: { x: string; y: string[]; z?: string; legend?: 'x' | 'y' | 'z' }) {
 	if (axis.y.length <= 1) return [];
 
 	const tipsData = data.map((d) => ({
