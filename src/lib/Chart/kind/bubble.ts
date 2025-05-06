@@ -20,6 +20,7 @@ export default function bubble(
 
 	const circles = root.leaves().map((d) => ({ ...d.data, ...d }));
 	const R = circles.map((c) => c.r);
+	const F = circles.map((c) => c.data[axis.x] as string);
 
 	const rIdentity = getIdentityScaleOptions([Math.min(...R), Math.max(...R)]);
 	const sizeIdentity = getIdentityScaleOptions([0, size.width]);
@@ -31,7 +32,7 @@ export default function bubble(
 		x: { ...d.x, ...sizeIdentity },
 		y: sizeIdentity,
 		r: rIdentity,
-		color: { legend: true },
+		color: { legend: true, domain: F },
 		marks: [
 			Plot.dot(circles, {
 				r: (d) => d.r,
